@@ -450,7 +450,7 @@ html, body {
 // ═══════════════════════════════════════════════════════════════
 //  KONFIGURATION  ← hier anpassen
 // ═══════════════════════════════════════════════════════════════
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz7vJRgxzOUd7usKWOS5ZhS7Kp9E-FfQGPoasYTTD41l640hkN_7Qq2TIJ9RCJJDr_7/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxACqTihyONExon-Xf98TdIs5DfESpQ40_hiWcZ31a25OkUEzRZKA-o3EWPZpW5jD0q/exec";
 // ═══════════════════════════════════════════════════════════════
 
 const STATE_KEY = "ze_status_v1";
@@ -594,7 +594,7 @@ async function aktion(aktionName, neuerZustand) {
   const jetzt = new Date();
   const eintrag = {
     name, aktion: aktionName,
-    datum:     jetzt.toLocaleDateString("de-DE"),
+    datum:     buildDatum(jetzt),
     uhrzeit:   jetzt.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
     timestamp: jetzt.toISOString()
   };
@@ -656,6 +656,13 @@ function zeigeFehler(msg) {
 }
 
 
+
+// ── Datums-Hilfsfunktion (konsistentes Format ohne führende Nullen) ────
+function buildDatum(date) {
+  const d = date || new Date();
+  return `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()}`;
+}
+
 // ── Langer Druck ──────────────────────────────────────────────
 let pressTimer = null;
 const PRESS_DAUER = 700; // ms
@@ -700,7 +707,7 @@ async function oeffneTagesansicht(name) {
   const overlay = document.getElementById('tagesOverlay');
   overlay.style.display = 'flex';
 
-  const datum = new Date().toLocaleDateString('de-DE');
+  const datum = buildDatum();
 
   let eintraege = [];
   if (WEB_APP_URL.startsWith('https://script.google.com')) {
