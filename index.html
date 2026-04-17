@@ -340,8 +340,7 @@ html, body {
 // ═══════════════════════════════════════════════════════════════
 //  KONFIGURATION  ← hier anpassen
 // ═══════════════════════════════════════════════════════════════
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec
-";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec";
 // ═══════════════════════════════════════════════════════════════
 
 // Zustände pro Mitarbeiter – in localStorage gespeichert
@@ -513,8 +512,7 @@ async function aktion(aktionName, neuerZustand) {
 
 // ── Google Sheets senden ──────────────────────────────────────
 async function sendeZuSheets(daten) {
-  if (WEB_APP_URL === "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec
-") return;
+  if (WEB_APP_URL === "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec") return;
   try {
     await fetch(WEB_APP_URL, {
       method: "POST",
@@ -529,8 +527,7 @@ async function sendeZuSheets(daten) {
 
 // ── Namen von Sheets laden ────────────────────────────────────
 async function ladeNamen() {
-  if (WEB_APP_URL === "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec
-") {
+  if (WEB_APP_URL === "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec") {
     console.log("🟡 Demo-Modus: WEB_APP_URL nicht gesetzt, verwende Fallback-Namen.");
     return ["Anna M.", "Ben K.", "Clara S.", "David R.", "Eva L.",
             "Frank H.", "Gabi N.", "Hans P.", "Iris W.", "Jan F.",
