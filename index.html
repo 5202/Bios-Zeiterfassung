@@ -717,7 +717,7 @@ function resetMA() {
 
 // ── Google Sheets senden ──────────────────────────────────────────────────────
 async function sendeZuSheets(daten) {
-  if (WEB_APP_URL === "DEINE_APPS_SCRIPT_WEB_APP_URL_HIER") {
+  if (WEB_APP_URL === "https://script.google.com/macros/s/AKfycbzxTaaD-JeYio8ufu0YrrDvN4PGhhG3LNQUkHqGmUV69t4wv7JCIT1FAF9Pw9FhL9p3/exec") {
     log("⚠ Web App URL nicht konfiguriert – Daten nur lokal angezeigt.", "error");
     log(`   Wäre gespeichert: ${daten.name} | ${daten.aktion} | ${daten.uhrzeit}`, "info");
     return;
