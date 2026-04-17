@@ -512,7 +512,7 @@ async function aktion(aktionName, neuerZustand) {
 
 // ── Google Sheets senden ──────────────────────────────────────
 async function sendeZuSheets(daten) {
-  if (WEB_APP_URL === "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec") return;
+  if (!WEB_APP_URL.startsWith("https://script.google.com")) return;
   try {
     await fetch(WEB_APP_URL, {
       method: "POST",
