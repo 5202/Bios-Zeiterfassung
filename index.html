@@ -340,7 +340,8 @@ html, body {
 // ═══════════════════════════════════════════════════════════════
 //  KONFIGURATION  ← hier anpassen
 // ═══════════════════════════════════════════════════════════════
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec
+";
 // ═══════════════════════════════════════════════════════════════
 
 // Zustände pro Mitarbeiter – in localStorage gespeichert
@@ -512,7 +513,8 @@ async function aktion(aktionName, neuerZustand) {
 
 // ── Google Sheets senden ──────────────────────────────────────
 async function sendeZuSheets(daten) {
-  if (WEB_APP_URL === "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec") return;
+  if (WEB_APP_URL === "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec
+") return;
   try {
     await fetch(WEB_APP_URL, {
       method: "POST",
@@ -527,8 +529,9 @@ async function sendeZuSheets(daten) {
 
 // ── Namen von Sheets laden ────────────────────────────────────
 async function ladeNamen() {
-  if (WEB_APP_URL === "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec") {
-    // Fallback für Demo-Modus
+  if (WEB_APP_URL === "https://script.google.com/macros/s/AKfycbwicZCZv7VEStfJa2bXbA6_fVOn0BGh85T2QWeHYZRLN0uSWN0un1YgPyzATNCLuUlA/exec
+") {
+    console.log("🟡 Demo-Modus: WEB_APP_URL nicht gesetzt, verwende Fallback-Namen.");
     return ["Anna M.", "Ben K.", "Clara S.", "David R.", "Eva L.",
             "Frank H.", "Gabi N.", "Hans P.", "Iris W.", "Jan F.",
             "Karin L.", "Lars M.", "Maria S.", "Nils R.", "Olga T.",
@@ -536,12 +539,27 @@ async function ladeNamen() {
   }
   try {
     const url = `${WEB_APP_URL}?action=getNamen&t=${Date.now()}`;
+    console.log("🔵 Lade Namen von:", url);
+
     const resp = await fetch(url);
-    const data = await resp.json();
+    console.log("🔵 HTTP Status:", resp.status, "| finale URL:", resp.url);
+
+    const text = await resp.text();
+    console.log("🔵 Rohantwort (erste 300 Zeichen):", text.substring(0, 300));
+
+    const data = JSON.parse(text);
+    console.log("🟢 Namen erfolgreich geladen:", data.namen);
+
+    if (!data.namen || data.namen.length === 0) {
+      console.warn("⚠️ Leere Namensliste – Stammdaten-Blatt prüfen (Spalte B ab Zeile 2).");
+    }
     return data.namen || [];
   } catch (err) {
-    zeigeFehler("Verbindung zu Google Sheets fehlgeschlagen – lokale Namen werden verwendet.");
-    return JSON.parse(localStorage.getItem("ze_namen_cache") || "[]");
+    console.error("🔴 Fehler beim Laden der Namen:", err);
+    zeigeFehler("Verbindung zu Google Sheets fehlgeschlagen – Cache wird verwendet.");
+    const cache = JSON.parse(localStorage.getItem("ze_namen_cache") || "[]");
+    console.log("🟡 Verwende Cache:", cache);
+    return cache;
   }
 }
 
